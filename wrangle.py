@@ -70,3 +70,19 @@ def remove_outliers(df, k, col_list):
         df = df[(df[col] > lower_bound) & (df[col] < upper_bound)]
         
     return df
+
+###################### Automated Clean DataFrame ####################
+
+def wrangle_zillow():
+    df = get_zillow_data()
+    df = df.replace(r'^\s*$', np.nan, regex=True)
+    df['calfinishedsqft'] = df.calculatedfinishedsquarefeet
+    df = df.drop(columns='calculatedfinishedsquarefeet')
+    df = df.dropna()
+    df = df[df.bedroomcnt > 0]
+    df = df[df.bedroomcnt < 5]
+    df = df[df.bathroomcnt > 0] 
+    df = df[df.bathroomcnt <= 3]
+    df = df[df.calfinishedsqft < 5000]
+    return df
+
