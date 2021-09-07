@@ -217,3 +217,9 @@ def plot_swarm_grid_with_color(train, target, cat_vars, quant_vars):
             ax[i].set_ylabel(quant)
             ax[i].set_title(cat)
         plt.show()
+        
+        
+        
+def months_to_years(df):
+    df['tenure_years'] = (df.tenure / 12).astype(int)
+    return df
