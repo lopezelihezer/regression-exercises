@@ -223,3 +223,18 @@ def plot_swarm_grid_with_color(train, target, cat_vars, quant_vars):
 def months_to_years(df):
     df['tenure_years'] = (df.tenure / 12).astype(int)
     return df
+
+
+
+def plot_categorical_and_continous_vars(df, quant_vars, cat_vars):
+    for var1 in quant_vars:
+        for var2 in cat_vars:
+            print(f'{var1} quant(y) vs {var2} cat(x)')
+            plt.bar(train[var2], train[var1])
+            plt.show()
+            sns.boxenplot(x=var2, y=var1, hue=var2, data=train)
+            plt.show()
+            sns.swarmplot(x=var2, y=var1, hue=var2, data=train)
+            plt.show()
+            print('__________________')
+    return print('done')

@@ -149,3 +149,41 @@ def split_iris_data(df):
     train, test = train_test_split(df, test_size = 0.2, random_state = 123, stratify = df.species)
     train, validate = train_test_split(train, test_size = 0.25, random_state = 123, stratify = train.species)
     return train, validate, test
+
+
+
+def new_mall_data():
+    '''
+    This function reads the telco data from the Codeup db into a df.
+    '''
+    sql_query = """
+                SELECT *
+                FROM customers;
+                """
+    
+    # Read in DataFrame from Codeup db.
+    df = pd.read_sql(sql_query, get_connection('mall_customers'))
+    
+    return df
+
+
+def get_mall_data():
+    '''
+    This function reads in telco data from Codeup database, writes data to
+    a csv file if a local file does not exist, and returns a df.
+    '''
+    if os.path.isfile('mall_df.csv'):
+        
+        # If csv file exists read in data from csv file.
+        df = pd.read_csv('mall_df.csv', index_col=0)
+        
+    else:
+        
+        # Read fresh data from db into a DataFrame
+        df = new_mall_data()
+        
+        # Cache data
+        df.to_csv('mall_df.csv')
+        
+    return df
+
